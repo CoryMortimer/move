@@ -53,7 +53,7 @@ angular.module('move.view1', ['ngRoute'])
       $scope.time.lastMove = Date.now();
     }
     $scope.time.nextMove = new Date($scope.time.lastMove);
-    $scope.time.nextMove.setMinutes($scope.time.nextMove.getMinutes() + 1);
+    $scope.time.nextMove.setMinutes($scope.time.nextMove.getMinutes() + .1);
     $scope.time.minutesTill = $scope.time.nextMove - $scope.time.current;
     $scope.time.timeToMove = false;
   };
@@ -64,64 +64,65 @@ angular.module('move.view1', ['ngRoute'])
     var now = Date.now();
     $scope.time.lastMove = new Date(now);
     $scope.time.timeToSit = new Date(now);
-    $scope.time.timeToSit.setMinutes($scope.time.timeToSit.getMinutes() + 1);
+    $scope.time.timeToSit.setMinutes($scope.time.timeToSit.getMinutes() + .1);
   };
   
-  $scope.notify = function(type) {
-    if (notificationNum > 100) {
-      notificationNum = 0;
+  $scope.notify = function(kind) {
+    if (window.chrome && chrome.app && chrome.app.runtime) {
+      if (notificationNum > 100) {
+        notificationNum = 0;
+      }
+      notificationNum = notificationNum + 1;
+    
+      if (kind === 'move') {
+        chrome.notifications.create(
+          'timeToMove' + notificationNum,{   
+          type: 'basic', 
+          iconUrl: 'move.png', 
+          title: 'Time to move!', 
+          message: 'It is time to move! Get up and do something!',
+          buttons: [{ title: 'Start move timer'},
+                    { title: 'Dismiss'}],
+          priority: 0}
+        );
+      } else if (kind === 'sit') {
+        chrome.notifications.create(
+          'timeToSit' + notificationNum,{   
+          type: 'basic', 
+          iconUrl: 'move.png', 
+          title: 'You may sit', 
+          message: 'Nice job! You can sit down. Don\'t forget to reset your timer!',
+          buttons: [{ title: 'Start sitting timer'},
+                    { title: 'Dismiss'}],
+          priority: 0}
+        );
+      }
     }
-    notificationNum = notificationNum + 1;
-    
-    // TODO: add notification count in so they can get more than one notification
-    
-//    if (type === 'move') {
-//      chrome.notifications.create(
-//        'timeToMove' + notificationNum,{   
-//        type: 'basic', 
-//        iconUrl: 'move.png', 
-//        title: 'Time to move!', 
-//        message: 'It is time to move! Get up and do something!',
-//        buttons: [{ title: 'Start move timer'},
-//                  { title: 'Dismiss'}],
-//        priority: 0}
-//      );
-//    } else if (type === 'sit') {
-//      chrome.notifications.create(
-//        'timeToSit' + notificationNum,{   
-//        type: 'basic', 
-//        iconUrl: 'move.png', 
-//        title: 'You may sit', 
-//        message: 'Nice job! You can sit down. Don\'t forget to reset your timer!',
-//        buttons: [{ title: 'Start sitting timer'},
-//                  { title: 'Dismiss'}],
-//        priority: 0}
-//      );
-//    }
   };
 
   // Start the timer
   $timeout(tick, $scope.tickInterval);
   
-//  chrome.notifications.onButtonClicked.addListener(function(notificationId, buttonIndex) {
-//      
-//      if (notificationId.indexOf('timeToMove') >= 0) {
-//        if (buttonIndex === 0) {
-//          if ($scope.time.moveBtn) {
-//            $scope.startMoving();
-//            chrome.app.window.get('move').focus();
-//          }
-//        }
-//        chrome.notifications.clear(notificationId);
-//      } else if (notificationId.indexOf('timeToSit') >= 0) {
-//        if (buttonIndex === 0) {
-//          if ($scope.time.sitBtn) {
-//            $scope.setNextMoveTime();
-//            chrome.app.window.get('move').focus();
-//          }
-//        }
-//        chrome.notifications.clear(notificationId);
-//      }
-//    });
+  if (window.chrome && chrome.app && chrome.app.runtime) {
+    chrome.notifications.onButtonClicked.addListener(function(notificationId, buttonIndex) {
+      if (notificationId.indexOf('timeToMove') >= 0) {
+        if (buttonIndex === 0) {
+          if ($scope.time.moveBtn) {
+            $scope.startMoving();
+            chrome.app.window.get('move').focus();
+          }
+        }
+        chrome.notifications.clear(notificationId);
+      } else if (notificationId.indexOf('timeToSit') >= 0) {
+        if (buttonIndex === 0) {
+          if ($scope.time.sitBtn) {
+            $scope.setNextMoveTime();
+            chrome.app.window.get('move').focus();
+          }
+        }
+        chrome.notifications.clear(notificationId);
+      }  
+    });
+  }
   
 }]);
