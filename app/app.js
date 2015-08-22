@@ -3,9 +3,9 @@
 // Declare app level module which depends on views, and components
 angular.module('move', [
   'ngRoute',
-  'move.view1',
+  'move.move',
   'move.view2',
 ]).
 config(['$routeProvider', function($routeProvider) {
-  $routeProvider.otherwise({redirectTo: '/view1'});
+  $routeProvider.otherwise({redirectTo: '/move'});
 }]);

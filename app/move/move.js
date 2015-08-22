@@ -1,15 +1,15 @@
 'use strict';
 
-angular.module('move.view1', ['ngRoute'])
+angular.module('move.move', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/view1', {
-    templateUrl: 'view1/view1.html',
-    controller: 'View1Ctrl'
+  $routeProvider.when('/move', {
+    templateUrl: 'move/move.html',
+    controller: 'MoveCtrl'
   });
 }])
 
-.controller('View1Ctrl', ['$scope', '$timeout', function($scope, $timeout) {
+.controller('MoveCtrl', ['$scope', '$timeout', function($scope, $timeout) {
   var notificationNum = 0;
   $scope.tickInterval = 1000;
   
@@ -53,7 +53,7 @@ angular.module('move.view1', ['ngRoute'])
       $scope.time.lastMove = Date.now();
     }
     $scope.time.nextMove = new Date($scope.time.lastMove);
-    $scope.time.nextMove.setMinutes($scope.time.nextMove.getMinutes() + .1);
+    $scope.time.nextMove.setMinutes($scope.time.nextMove.getMinutes() + 1);
     $scope.time.minutesTill = $scope.time.nextMove - $scope.time.current;
     $scope.time.timeToMove = false;
   };
@@ -64,7 +64,7 @@ angular.module('move.view1', ['ngRoute'])
     var now = Date.now();
     $scope.time.lastMove = new Date(now);
     $scope.time.timeToSit = new Date(now);
-    $scope.time.timeToSit.setMinutes($scope.time.timeToSit.getMinutes() + .1);
+    $scope.time.timeToSit.setMinutes($scope.time.timeToSit.getMinutes() + 1);
   };
   
   $scope.notify = function(kind) {
