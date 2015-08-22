@@ -97,6 +97,12 @@ angular.module('move.move', ['ngRoute'])
           priority: 0}
         );
       }
+    } else {
+      if (kind === 'move') {
+        alert("It is time to move! Get up and do something!");
+      } else if (kind === 'sit') {
+        alert("Nice job! You can sit down. Don\'t forget to reset your timer!");
+      }
     }
   };
 
