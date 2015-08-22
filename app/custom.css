@@ -1,0 +1,27 @@
+@font-face {
+    font-family:"InconsolataRegular";
+    src: url("Inconsolata-Regular.ttf") /* TTF file for CSS3 browsers */
+}
+
+.page-background {
+  font-family: 'InconsolataRegular';
+  background: rgb(237,237,237);
+}
+.time-left {
+  border-radius: 7%;
+  padding: 25px 0px;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.bottom-buttons {
+  width: 34em;
+  position: absolute;
+  bottom: 5px;
+}
+
+.heading {
+  border-bottom: thick solid rgb(159,159,159);
+}

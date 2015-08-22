@@ -1,0 +1,30 @@
+<div class="container">
+  <div class="row heading">
+    <div class="col-xs-12 text-center">
+      <h1 ng-show="time.current">{{time.current | date:'MMMM dd, y h:mm:ss a'}}</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-6">
+      <h2 ng-show="time.lastMove">Last Move <br><small>{{time.lastMove | date:'MMMM dd, y h:mm:ss a'}}</small></h2>
+      <h2 ng-show="time.nextMove">Next Move <br><small>{{time.nextMove | date:'MMMM dd, y h:mm:ss a'}}</small></h3>
+    </div>
+    <div class="col-xs-6 text-center" ng-show="time.minutesTill">
+      <h2>Time until move</h2>
+      <h1 class="text-center time-left bg-success">{{time.minutesTill | date:'mm:ss'}}</h1>  
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h1 ng-show="time.timeToMove" class="text-center">Get Up! Stand for at least {{time.timeRemaining | date:'ss'}} seconds</h1>
+    </div>
+  </div>
+  <div class="row bottom-buttons">
+    <div class="col-xs-6">
+      <button ng-disabled="!time.sitBtn" ng-click="setNextMoveTime()" class="btn btn-lg btn-primary btn-block">Start sitting timer</button>
+    </div>
+    <div class="col-xs-6">
+      <button ng-disabled="!time.moveBtn" ng-click="startMoving()" class="btn btn-lg btn-primary btn-block">Start move timer</button>
+    </div>
+</div>
+</div>
