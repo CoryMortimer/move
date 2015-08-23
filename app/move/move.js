@@ -53,7 +53,7 @@ angular.module('move.move', ['ngRoute'])
       $scope.time.lastMove = Date.now();
     }
     $scope.time.nextMove = new Date($scope.time.lastMove);
-    $scope.time.nextMove.setMinutes($scope.time.nextMove.getMinutes() + 1);
+    $scope.time.nextMove.setMinutes($scope.time.nextMove.getMinutes() + 60);
     $scope.time.minutesTill = $scope.time.nextMove - $scope.time.current;
     $scope.time.timeToMove = false;
   };
