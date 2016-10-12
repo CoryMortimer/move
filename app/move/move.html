@@ -21,10 +21,10 @@
   </div>
   <div class="row bottom-buttons">
     <div class="col-xs-6">
-      <button ng-disabled="!time.sitBtn" ng-click="setNextMoveTime()" class="btn btn-lg btn-primary btn-block">Start sitting timer</button>
+      <button ng-disabled="!time.sitBtn" ng-click="setNextMoveTime()" class="btn btn-lg btn-primary btn-block">{{time.sitButtonName}} sitting timer</button>
     </div>
     <div class="col-xs-6">
-      <button ng-disabled="!time.moveBtn" ng-click="startMoving()" class="btn btn-lg btn-primary btn-block">Start move timer</button>
+      <button ng-disabled="!time.moveBtn" ng-click="startMoving()" class="btn btn-lg btn-primary btn-block">{{time.moveButtonName}} move timer</button>
     </div>
 </div>
 </div>

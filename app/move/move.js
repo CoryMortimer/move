@@ -21,8 +21,11 @@ angular.module('move.move', ['ngRoute'])
     timeToMove: false,
     timeToSit: null,
     timeRemaining: null,
-    moveBtn: false,
+    moveBtn: true,
     sitBtn: true,
+
+    sitButtonName: 'Start',
+    moveButtonName: 'Start'
   };
   
   var tick = function() {
@@ -34,7 +37,7 @@ angular.module('move.move', ['ngRoute'])
         $scope.time.nextMove = null;
         $scope.time.minutesTill = null;
         $scope.time.moveBtn = true;
-        $scope.time.sitBtn = false;
+        $scope.time.sitButtonName = 'Start';
       }
     }
     if ($scope.time.timeToMove) {
@@ -43,28 +46,47 @@ angular.module('move.move', ['ngRoute'])
         $scope.notify('sit');
         $scope.time.timeToMove = false;
         $scope.time.sitBtn = true;
+        $scope.time.moveButtonName = 'Start';
       }
     }
     $timeout(tick, $scope.tickInterval); // reset the timer
     };
   
   $scope.setNextMoveTime = function () {
-    if (!$scope.time.lastMove) {
-      $scope.time.lastMove = Date.now();
+    if (!$scope.time.nextMove) {
+      if (!$scope.time.lastMove) {
+        $scope.time.lastMove = Date.now();
+      }
+      $scope.time.nextMove = new Date($scope.time.lastMove);
+      $scope.time.nextMove.setMinutes($scope.time.nextMove.getMinutes() + 60);
+      $scope.time.minutesTill = $scope.time.nextMove - $scope.time.current;
+      $scope.time.timeToMove = false;
+      $scope.time.sitButtonName = 'Stop';
+      $scope.time.moveBtn = false;
+    } else {
+      $scope.time.sitButtonName = 'Start';
+      $scope.time.nextMove = null;
+      $scope.time.minutesTill = null;
+      $scope.time.moveBtn = true;
     }
-    $scope.time.nextMove = new Date($scope.time.lastMove);
-    $scope.time.nextMove.setMinutes($scope.time.nextMove.getMinutes() + 60);
-    $scope.time.minutesTill = $scope.time.nextMove - $scope.time.current;
-    $scope.time.timeToMove = false;
   };
   
   $scope.startMoving = function() {
-    $scope.time.moveBtn = false;
-    $scope.time.timeToMove = true;
-    var now = Date.now();
-    $scope.time.lastMove = new Date(now);
-    $scope.time.timeToSit = new Date(now);
-    $scope.time.timeToSit.setMinutes($scope.time.timeToSit.getMinutes() + 1);
+    $scope.time.nextMove = null;
+    $scope.time.minutesTill = null;
+    $scope.time.sitBtn = !$scope.time.sitBtn;
+
+    if (!$scope.time.timeToMove) {
+      $scope.time.timeToMove = true;
+      var now = Date.now();
+      $scope.time.lastMove = new Date(now);
+      $scope.time.timeToSit = new Date(now);
+      $scope.time.timeToSit.setMinutes($scope.time.timeToSit.getMinutes() + 1);
+      $scope.time.moveButtonName = 'Stop';
+    } else {
+      $scope.time.moveButtonName = 'Start';
+      $scope.time.timeToMove = false;
+    }
   };
   
   $scope.notify = function(kind) {
