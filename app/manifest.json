@@ -1,7 +1,8 @@
 {
   "name": "Move",
-  "version": "0.0.5",
+  "version": "0.0.1",
   "manifest_version": 2,
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsmSrOVNeEUX8c4tf81Nq8fy7K6xshNrvAG42mHn9iwB6i92B5hMRhNVRt6br9kezkzgIYytAS1nmiOJB+RQCqVyMejTKmfiEbJgTclgc/Dnz4XFeUxqy9xxV7+9g+At6XQRAt2uq697bH8RIyMnfXG7JdJAu44azPMP8AQlwQIeU8JdXSPu1RAX0SSlHjHrdP3xwAJrUsU0ndGEUE7bNnsvVHYdg7WEuVBXFDC9fxTxiqaUBVbeZTv7E/WJgSrqjnGf2FdAZjLVHgnYq+7O+8lSRUBxcR7qtZUTS1CH/K70vvzZKPlZ6eXCk1JQzAF2e/GXAN1MekyIiBRaSMw/2VwIDAQAB",
   "minimum_chrome_version": "29",
   "app": {
     "background": {
@@ -10,5 +11,6 @@
   },
   "permissions": [
     "notifications"
-  ]
+  ],
+  "icons": {}
 }
